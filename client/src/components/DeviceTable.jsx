@@ -5,10 +5,10 @@ import { useAuth } from "../context/AuthContext";
 const ROWS_PER_PAGE = 8;
 
 const DeviceTable = () => {
-    const [devices, setDevices] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    
-    const { isLoading, setIsLoading } = useAuth();
+  const [devices, setDevices] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { isLoading, setIsLoading } = useAuth();
   const fetchDevices = async () => {
     try {
       setIsLoading(true);
@@ -69,7 +69,7 @@ const DeviceTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto bg-white shadow-md rounded p-4">
+    <div className="overflow-x-auto bg-white border border-gray-800 shadow-md rounded p-4">
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
           <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
@@ -88,35 +88,35 @@ const DeviceTable = () => {
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
-           <tbody>
-    {currentData && currentData.length > 0 ? (
-      currentData.map((d) => (
-        <tr key={d.id} className="text-center border-b">
-          <td className="px-4 py-2">{d.id}</td>
-          <td className="px-4 py-2">{formatDate(d.lastSync)}</td>
-          <td className="px-4 py-2">
-            {d.status === "Success" && "✅ Success"}
-            {d.status === "Failed" && "❌ Failed"}
-            {d.status === "Pending" && "⏳ Pending"}
-          </td>
-          <td className="px-4 py-2">
-            <button
-              onClick={() => handleSync(d.id)}
-              className="text-blue-600 underline"
-            >
-              Sync Now
-            </button>
-          </td>
-        </tr>
-      ))
-    ) : (
-      <tr>
-        <td colSpan="4" className="text-center py-4 text-gray-500">
-          No data found
-        </td>
-      </tr>
-    )}
-  </tbody>
+            <tbody>
+              {currentData && currentData.length > 0 ? (
+                currentData.map((d) => (
+                  <tr key={d.id} className="text-center border-b">
+                    <td className="px-4 py-2">{d.id}</td>
+                    <td className="px-4 py-2">{formatDate(d.lastSync)}</td>
+                    <td className="px-4 py-2">
+                      {d.status === "Success" && "✅ Success"}
+                      {d.status === "Failed" && "❌ Failed"}
+                      {d.status === "Pending" && "⏳ Pending"}
+                    </td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => handleSync(d.id)}
+                        className="text-blue-600 underline"
+                      >
+                        Sync Now
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="text-center py-4 text-gray-500">
+                    No data found
+                  </td>
+                </tr>
+              )}
+            </tbody>
           </table>
 
           <div className="pagination flex flex-wrap justify-center items-center gap-2 mt-6">

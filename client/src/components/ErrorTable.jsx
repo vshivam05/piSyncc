@@ -64,7 +64,7 @@ const ErrorTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto bg-white shadow-md rounded p-4">
+    <div className="overflow-x-auto bg-white border border-gray-800 shadow-md rounded p-4">
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
           <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
@@ -83,26 +83,24 @@ const ErrorTable = () => {
               </tr>
             </thead>
             <tbody>
-              { currentData && currentData.length > 0 ? (
-              currentData.map((d) => (
-                <tr key={d.id} className="text-center border-b">
-                  <td className="px-4 py-2">{d.id}</td>
-                  <td className="px-4 py-2">{d.error || "Unknown Error"}</td>
-                  <td className="px-4 py-2">
-                    {/* {new Date(d.lastSync).toLocaleDateString()} */}
-                    {formatDate(d.lastSync)}
+              {currentData && currentData.length > 0 ? (
+                currentData.map((d) => (
+                  <tr key={d.id} className="text-center border-b">
+                    <td className="px-4 py-2">{d.id}</td>
+                    <td className="px-4 py-2">{d.error || "Unknown Error"}</td>
+                    <td className="px-4 py-2">
+                      {/* {new Date(d.lastSync).toLocaleDateString()} */}
+                      {formatDate(d.lastSync)}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4" className="text-center py-4 text-gray-500">
+                    No data found
                   </td>
                 </tr>
-              ))
-               ) : (
-      <tr>
-        <td colSpan="4" className="text-center py-4 text-gray-500">
-          No data found
-        </td>
-      </tr>
-    )
-            
-            }
+              )}
             </tbody>
           </table>
 

@@ -68,87 +68,90 @@ const DeviceTable = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  return (
-    <div className="overflow-x-auto bg-white border border-gray-800 shadow-md rounded p-4">
-      {isLoading ? (
-        <div className="flex justify-center items-center py-8">
-          <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-          <span className="ml-4 text-gray-600 font-medium">
-            Loading devices...
-          </span>
-        </div>
-      ) : (
-        <>
-          <table className="min-w-full table-auto">
-            <thead className="bg-gray-200">
-              <tr>
-                <th className="px-4 py-2">Device ID</th>
-                <th className="px-4 py-2">Last Sync Time</th>
-                <th className="px-4 py-2">Sync Status</th>
-                <th className="px-4 py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData && currentData.length > 0 ? (
-                currentData.map((d) => (
-                  <tr key={d.id} className="text-center border-b">
-                    <td className="px-4 py-2">{d.id}</td>
-                    <td className="px-4 py-2">{formatDate(d.lastSync)}</td>
-                    <td className="px-4 py-2">
-                      {d.status === "Success" && "✅ Success"}
-                      {d.status === "Failed" && "❌ Failed"}
-                      {d.status === "Pending" && "⏳ Pending"}
-                    </td>
-                    <td className="px-4 py-2">
-                      <button
-                        onClick={() => handleSync(d.id)}
-                        className="text-blue-600 underline"
-                      >
-                        Sync Now
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4" className="text-center py-4 text-gray-500">
-                    No data found
+ return (
+  <div className="w-full overflow-x-auto bg-white border border-gray-800 shadow-md rounded p-4 sm:p-6">
+    {isLoading ? (
+      <div className="flex justify-center items-center py-8">
+        <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+        <span className="ml-4 text-gray-600 font-medium text-sm sm:text-base">
+          Loading devices...
+        </span>
+      </div>
+    ) : (
+      <>
+        <table className="min-w-full table-auto text-xs sm:text-sm md:text-base">
+          <thead className="bg-gray-200 text-gray-700">
+            <tr>
+              <th className="px-2 sm:px-4 py-2 text-left whitespace-nowrap">Device ID</th>
+              <th className="px-2 sm:px-4 py-2 text-left whitespace-nowrap">Last Sync Time</th>
+              <th className="px-2 sm:px-4 py-2 text-left whitespace-nowrap">Sync Status</th>
+              <th className="px-2 sm:px-4 py-2 text-left whitespace-nowrap">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentData && currentData.length > 0 ? (
+              currentData.map((d) => (
+                <tr key={d.id} className="border-b text-gray-800">
+                  <td className="px-2 sm:px-4 py-2 break-all">{d.id}</td>
+                  <td className="px-2 sm:px-4 py-2 break-all">{formatDate(d.lastSync)}</td>
+                  <td className="px-2 sm:px-4 py-2 break-all">
+                    {d.status === "Success" && "✅ Success"}
+                    {d.status === "Failed" && "❌ Failed"}
+                    {d.status === "Pending" && "⏳ Pending"}
+                  </td>
+                  <td className="px-2 sm:px-4 py-2">
+                    <button
+                      onClick={() => handleSync(d.id)}
+                      className="text-blue-600 underline text-xs sm:text-sm"
+                    >
+                      Sync Now
+                    </button>
                   </td>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center py-4 text-gray-500">
+                  No data found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
-          <div className="pagination flex flex-wrap justify-center items-center gap-2 mt-6">
-            <button
-              onClick={handlePrev}
-              disabled={currentPage === 1}
-              className={`px-4 py-2 rounded-md ${
-                currentPage === 1
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-red-600 hover:bg-red-700 text-white"
-              }`}
-            >
-              Prev
-            </button>
-            {renderPageButtons()}
+        {/* Pagination */}
+        <div className="pagination flex flex-wrap justify-center items-center gap-2 mt-6">
+          <button
+            onClick={handlePrev}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 sm:px-4 sm:py-2 text-sm rounded-md ${
+              currentPage === 1
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-red-600 hover:bg-red-700 text-white"
+            }`}
+          >
+            Prev
+          </button>
 
-            <button
-              onClick={handleNext}
-              disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded-md ${
-                currentPage === totalPages
-                  ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-red-600 hover:bg-red-700 text-white"
-              }`}
-            >
-              Next
-            </button>
-          </div>
-        </>
-      )}
-    </div>
-  );
+          {renderPageButtons()}
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-3 py-1 sm:px-4 sm:py-2 text-sm rounded-md ${
+              currentPage === totalPages
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-red-600 hover:bg-red-700 text-white"
+            }`}
+          >
+            Next
+          </button>
+        </div>
+      </>
+    )}
+  </div>
+);
+
 };
 
 export default DeviceTable;

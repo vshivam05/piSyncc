@@ -64,7 +64,7 @@ const ErrorTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto bg-white border border-gray-800 shadow-md rounded p-4">
+    <div className="w-full overflow-x-auto bg-white border border-gray-800 shadow-md rounded p-4">
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
           <div className="w-8 h-8 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
@@ -74,35 +74,38 @@ const ErrorTable = () => {
         </div>
       ) : (
         <>
-          <table className="min-w-full table-auto">
-            <thead className="bg-gray-200">
-              <tr>
-                <th className="px-4 py-2">Device ID</th>
-                <th className="px-4 py-2">Error Message</th>
-                <th className="px-4 py-2">Last Attempt</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentData && currentData.length > 0 ? (
-                currentData.map((d) => (
-                  <tr key={d.id} className="text-center border-b">
-                    <td className="px-4 py-2">{d.id}</td>
-                    <td className="px-4 py-2">{d.error || "Unknown Error"}</td>
-                    <td className="px-4 py-2">
-                      {/* {new Date(d.lastSync).toLocaleDateString()} */}
-                      {formatDate(d.lastSync)}
+          <div className="w-full overflow-x-auto">
+            <table className="min-w-full table-auto text-sm sm:text-base">
+              <thead className="bg-gray-200">
+                <tr>
+                  <th className="px-2 sm:px-4 py-2 text-left">Device ID</th>
+                  <th className="px-2 sm:px-4 py-2 text-left">Error Message</th>
+                  <th className="px-2 sm:px-4 py-2 text-left">Last Attempt</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentData && currentData.length > 0 ? (
+                  currentData.map((d) => (
+                    <tr key={d.id} className="border-b">
+                      <td className="px-2 sm:px-4 py-2 break-words">{d.id}</td>
+                      <td className="px-2 sm:px-4 py-2 break-words">
+                        {d.error || "Unknown Error"}
+                      </td>
+                      <td className="px-2 sm:px-4 py-2 break-words">
+                        {formatDate(d.lastSync)}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="3" className="text-center py-4 text-gray-500">
+                      No data found
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="4" className="text-center py-4 text-gray-500">
-                    No data found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
 
           {totalPages > 1 && (
             <div className="pagination flex flex-wrap justify-center items-center gap-2 mt-6">
